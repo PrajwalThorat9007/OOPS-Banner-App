@@ -1,35 +1,103 @@
-/*
-O0PSBannerApp UC6 - 00PS Banner Application (Use Case 6)
-
-This use case extends UC5 by implementing a modular approach to generate each
-letter's pattern through dedicated methods. This enhances code reusability and
-maintainability by separating pattern generation logic from the main display logic.
-
-@author Developer
-@version 6.0
-*/
-
+/**
+ * UC7: Store Character Pattern in a Class
+ * Goal:
+ * Enhance the banner application by introducing a static inner
+ * class 'CharacterPattern' that encapsulates a character and
+ * its corresponding 7-line banner pattern.
+ * Flow:
+ * CharacterPattern objects are created for O, P, and S.
+ * These objects store pattern data which is retrieved using
+ * getter methods. The main method assembles banner rows
+ * and prints them using a loop.
+ * Concepts Used:
+ * Encapsulation, Inner Static Class, Constructors,
+ * Arrays of Objects, Getter Methods, and Modularity.
+ */
 public class OOPSBannerApp {
+
+    static class CharacterPattern {
+
+        private char character;
+        private String[] pattern;
+
+        // Constructor
+        public CharacterPattern(char character, String[] pattern) {
+            this.character = character;
+            this.pattern = pattern;
+        }
+
+        // Getter
+        public String[] getPattern() {
+            return pattern;
+        }
+
+        public char getCharacter() {
+            return character;
+        }
+    }
 
     public static void main(String[] args) {
 
-        String[] bannerLines = buildOOPSBanner();
+        // Create objects
+        CharacterPattern O =
+                new CharacterPattern('O', getOPattern());
 
-        for (String line : bannerLines) {
+        CharacterPattern P =
+                new CharacterPattern('P', getPPattern());
+
+        CharacterPattern S =
+                new CharacterPattern('S', getSPattern());
+
+        CharacterPattern[] word = {O, O, P, S};
+
+        // Print banner
+        for (int row = 0; row < 7; row++) {
+
+            StringBuilder line = new StringBuilder();
+
+            for (CharacterPattern cp : word) {
+                line.append(cp.getPattern()[row]).append(" ");
+            }
+
             System.out.println(line);
         }
     }
 
-    private static String[] buildOOPSBanner() {
+    // Utility methods (reuse UC6 methods)
+
+    public static String[] getOPattern() {
         return new String[]{
-                String.join("", "  *****   ", "  *****   ", "  *****   ", "  *****  "),
-                String.join("", " *     *  ", " *     *  ", " *     *  ", " *      "),
-                String.join("", " *     *  ", " *     *  ", " *     *  ", " *      "),
-                String.join("", " *     *  ", " *     *  ", " *****   ", "  *****  "),
-                String.join("", " *     *  ", " *     *  ", " *       ", "       *"),
-                String.join("", " *     *  ", " *     *  ", " *       ", "       *"),
-                String.join("", "  *****   ", "  *****   ", " *       ", "  *****  ")
+                "    ***    ",
+                "  **   **  ",
+                " **     ** ",
+                " **     ** ",
+                " **     ** ",
+                "  **   **  ",
+                "    ***    "
+        };
+    }
+
+    public static String[] getPPattern() {
+        return new String[]{
+                " *******   ",
+                " **     ** ",
+                " **     ** ",
+                " *******   ",
+                " **        ",
+                " **        ",
+                " **        "
+        };
+    }
+
+    public static String[] getSPattern() {
+        return new String[]{
+                "  *******  ",
+                " **        ",
+                "    **     ",
+                "      **   ",
+                "        ** ",
+                "        ** ",
+                "  *******  "
         };
     }
 }
-
