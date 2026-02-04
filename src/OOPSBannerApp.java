@@ -1,61 +1,58 @@
-/**
- * UC7: Store Character Pattern in a Class
- * Goal:
- * Enhance the banner application by introducing a static inner
- * class 'CharacterPattern' that encapsulates a character and
- * its corresponding 7-line banner pattern.
- * Flow:
- * CharacterPattern objects are created for O, P, and S.
- * These objects store pattern data which is retrieved using
- * getter methods. The main method assembles banner rows
- * and prints them using a loop.
- * Concepts Used:
- * Encapsulation, Inner Static Class, Constructors,
- * Arrays of Objects, Getter Methods, and Modularity.
- */
+/*
+00PSBannerApp - Use Map for Character Patterns and Render via Function
+
+This use case extends UC7 by utilizing advanced Object-Oriented Programming concepts
+such as the Collections Framework to manage character patterns in a more flexible
+and efficient manner. The application retrieves and displays the "00PS" banner
+using a HashMap there by enhancing code organization and modularity.
+
+@author Developer
+@version 8.0
+*/
+import java.util.HashMap;
+import java.util.Map;
+
 public class OOPSBannerApp {
 
+    // ⭐ Inner Static Class
     static class CharacterPattern {
 
         private char character;
         private String[] pattern;
 
-        // Constructor
         public CharacterPattern(char character, String[] pattern) {
             this.character = character;
             this.pattern = pattern;
         }
 
-        // Getter
-        public String[] getPattern() {
-            return pattern;
-        }
-
         public char getCharacter() {
             return character;
+        }
+
+        public String[] getPattern() {
+            return pattern;
         }
     }
 
     public static void main(String[] args) {
 
-        // Create objects
-        CharacterPattern O =
-                new CharacterPattern('O', getOPattern());
+        // 1️⃣ Create Map of character patterns
+        Map<Character, CharacterPattern> patternMap = new HashMap<>();
 
-        CharacterPattern P =
-                new CharacterPattern('P', getPPattern());
+        patternMap.put('O', new CharacterPattern('O', getOPattern()));
+        patternMap.put('P', new CharacterPattern('P', getPPattern()));
+        patternMap.put('S', new CharacterPattern('S', getSPattern()));
 
-        CharacterPattern S =
-                new CharacterPattern('S', getSPattern());
+        // 2️⃣ Word can now be dynamic
+        String word = "OOPS";
 
-        CharacterPattern[] word = {O, O, P, S};
-
-        // Print banner
+        // 3️⃣ Print banner dynamically
         for (int row = 0; row < 7; row++) {
 
             StringBuilder line = new StringBuilder();
 
-            for (CharacterPattern cp : word) {
+            for (char ch : word.toCharArray()) {
+                CharacterPattern cp = patternMap.get(ch);
                 line.append(cp.getPattern()[row]).append(" ");
             }
 
@@ -63,7 +60,7 @@ public class OOPSBannerApp {
         }
     }
 
-    // Utility methods (reuse UC6 methods)
+    // ---------- Pattern Providers ----------
 
     public static String[] getOPattern() {
         return new String[]{
